@@ -1,8 +1,0 @@
-{
-	"SourceFiles": [
-		"U:\\UE5 Projects\\GD_TurnBased\\Source\\GD_TurnBased\\GD_TurnBased.Build.cs",
-		"U:\\UE5 Projects\\GD_TurnBased\\Source\\GD_TurnBased.Target.cs",
-		"U:\\UE5 Projects\\GD_TurnBased\\Source\\GD_TurnBasedEditor.Target.cs"
-	],
-	"EngineVersion": "5.3.2"
-}
