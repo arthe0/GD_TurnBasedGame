@@ -15,11 +15,17 @@ ATBGTileGrid::ATBGTileGrid()
 
 void ATBGTileGrid::ReGenerateGrid_Implementation()
 {
-	Destroy();
+	DestroyAllTiles();
 	GenerateBaseGrid(GridDimensions);
 }
 
 void ATBGTileGrid::BeginPlay() { Super::BeginPlay(); }
+
+void ATBGTileGrid::BeginDestroy()
+{
+	Super::BeginDestroy();
+	DestroyAllTiles();
+}
 
 void ATBGTileGrid::OnConstruction(const FTransform& Transform)
 {
@@ -66,7 +72,7 @@ void ATBGTileGrid::GenerateBaseGrid(const FIntVector Dimensions)
 
 				Location.X = WorldXOffset * TileScale;
 				Location.Y = WorldYOffset * TileScale;
-				Location.Z = GetActorLocation().Z;
+				Location.Z = 0;
 				const TObjectPtr<ATBGMapTile> Tile = World->SpawnActorDeferred<ATBGMapTile>(TileClass, GetActorTransform());
 				if (!Tile)
 				{
@@ -79,6 +85,8 @@ void ATBGTileGrid::GenerateBaseGrid(const FIntVector Dimensions)
 				const FIntVector TileCoords = FIntVector(X, Y, Z);
 				MapTiles.Add(TileCoords, Tile);
 				Tile->Coordinates = TileCoords;
+				Tile->SetOwner(this);
+
 				Tile->FinishSpawning(Tile->GetActorTransform());
 
 				Tile->SetActorRelativeScale3D(FVector(TileScale));
@@ -90,7 +98,7 @@ void ATBGTileGrid::GenerateBaseGrid(const FIntVector Dimensions)
 
 }
 
-void ATBGTileGrid::Destroy()
+void ATBGTileGrid::DestroyAllTiles()
 {
 	if (MapTiles.IsEmpty()) { return; }
 	for (const auto& Tile : MapTiles) { Tile.Value->Destroy(); }
@@ -100,3 +108,18 @@ void ATBGTileGrid::Destroy()
 
 // Helper functions
 float ATBGTileGrid::CalculateTileInnerRadius(const float OuterRadius) { return OuterRadius * FMath::Sqrt(3.f) / 2; }
+
+// Getters and Setters
+ATBGMapTile* ATBGTileGrid::GetTileAtCoordinates(const int32 X, const int32 Y, const int32 Z)
+{
+	const auto Tile = MapTiles.Find(FIntVector(X, Y, Z));
+	if (!Tile) { return nullptr; }
+	return *Tile;
+}
+
+ATBGMapTile* ATBGTileGrid::GetTileAtCoordinatesVector(const FIntVector Coordinates)
+{
+	const auto Tile = MapTiles.Find(Coordinates);
+	if (!Tile) { return nullptr; }
+	return *Tile;
+}

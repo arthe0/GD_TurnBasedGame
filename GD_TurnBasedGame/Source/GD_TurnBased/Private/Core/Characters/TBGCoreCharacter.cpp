@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "GameFramework/Character.h"
 #include "Core/Characters/TBGCoreCharacter.h"
+#include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 ATBGCoreCharacter::ATBGCoreCharacter(const FObjectInitializer& ObjectInitializer)
@@ -35,23 +35,14 @@ ATBGCoreCharacter::ATBGCoreCharacter(const FObjectInitializer& ObjectInitializer
 	PrimaryActorTick.bStartWithTickEnabled = true;
 }
 
-void ATBGCoreCharacter::BeginPlay()
-{
-	Super::BeginPlay();
-}
+void ATBGCoreCharacter::BeginPlay() { Super::BeginPlay(); }
 
-void ATBGCoreCharacter::Tick(float DeltaSeconds)
-{
-	Super::Tick(DeltaSeconds);
-}
+void ATBGCoreCharacter::Tick(float DeltaSeconds) { Super::Tick(DeltaSeconds); }
 
-void ATBGCoreCharacter::Move()
-{
-}
+void ATBGCoreCharacter::Move() {}
 
 // void ACoreCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 // {
 // 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 //
 // }
-

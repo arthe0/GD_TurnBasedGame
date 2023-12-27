@@ -21,6 +21,7 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+	virtual void BeginDestroy() override;
 
 	virtual void OnConstruction(const FTransform& Transform) override;
 
@@ -28,7 +29,7 @@ protected:
 	virtual void GenerateBaseGrid(FIntVector Dimensions);
 
 	UFUNCTION(BlueprintCallable)
-	virtual void Destroy();
+	virtual void DestroyAllTiles();
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category=Generation)
 	TSubclassOf<ATBGMapTile> TileClass;
@@ -56,4 +57,12 @@ private:
 	// Helper functions
 	static float CalculateTileInnerRadius(float OuterRadius);
 
+public:
+	// Getters and Setters
+
+	UFUNCTION(BlueprintCallable)
+	ATBGMapTile* GetTileAtCoordinates(const int32 X, const int32 Y, const int32 Z);
+
+	UFUNCTION(BlueprintCallable)
+	ATBGMapTile* GetTileAtCoordinatesVector(const FIntVector Coordinates);
 };
